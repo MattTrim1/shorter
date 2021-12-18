@@ -45,11 +45,10 @@ def home():
 @app.route("/v1/url/<shortcode>", methods=["GET"])
 def get(shortcode):
     # Using the shortcode, return the full url to the client
-    # return shortcode
+    return shortcode
 
 
 @app.route("/v1/url", methods=["POST"])
 def create_shortcode():
     # Using the full url, create the DB entry and return the shortcode to the client
-
-    # return request.data
+    return request.data
