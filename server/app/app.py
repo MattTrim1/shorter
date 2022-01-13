@@ -4,8 +4,8 @@ shorter - A small API for URL shortening.
 import datetime
 import os
 
-from app.models.url import UrlModel
-from app.schemas.url import CreateUrlInputSchema
+from models.url import UrlModel
+from schemas.url import CreateUrlInputSchema
 from dotenv import load_dotenv
 from flask import Flask, request, g, Response, jsonify, make_response
 from flask_pymongo import PyMongo
