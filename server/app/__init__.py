@@ -112,3 +112,10 @@ def create_shortcode():
     }
 
     return jsonify(created_response_json)
+
+
+@app.route("/v1/url/purge-expired", methods=["POST"])
+def purge_expired():
+    query = {"expires_at": {"$lte": datetime.datetime.now()}}
+    results = urls.delete_many(query)
+    return jsonify({"status": "success", "deleted": results.deleted_count})
