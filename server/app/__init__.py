@@ -55,8 +55,19 @@ def home():
 
 @app.route("/v1/url/<shortcode>", methods=["GET"])
 def get(shortcode):
-    # Using the shortcode, return the full url to the client
-    return shortcode
+    query = {"shortcode": shortcode}
+    result_count = urls.count_documents(query)
+    if result_count == 0:
+        return Response("{'status': 'SHORTCODE_NOT_FOUND'}", status=404, mimetype='application/json')
+
+    result = urls.find_one(query, {'_id': 0, 'full_url': 1})
+
+    resp = {
+        "status": "success",
+        "full_url": result['full_url']
+    }
+
+    return jsonify(resp)
 
 
 @app.route("/v1/url", methods=["POST"])
@@ -76,7 +87,7 @@ def create_shortcode():
     query = {"full_url": full_url}
     count = urls.count_documents(query)
 
-    if count is not 0:
+    if count != 0:
         existing = urls.find_one(query, {'_id': 0, 'shortcode': 1, 'expires_at': 1})
         urls.update_one(query, {'$set': {'expires_at': existing['expires_at'] + datetime.timedelta(weeks=4)}})
         resp = {
