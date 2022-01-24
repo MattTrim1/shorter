@@ -132,6 +132,6 @@ def auth():
 
     password = data['password']
     if password == os.getenv("APP_AUTH_PASSWORD"):
-        return Response("{'auth': 'success'}")
+        return Response("{'auth': 'success'}", mimetype='application/json')
 
     return Response("{'auth': 'failure'}", status=400, mimetype='application/json')
