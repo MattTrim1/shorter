@@ -6,6 +6,7 @@ import os
 
 from models.url import UrlModel
 from schemas.url import CreateUrlInputSchema
+from schemas.auth import AuthInputSchema
 from dotenv import load_dotenv
 from flask import Flask, request, g, Response, jsonify, make_response
 from flask_pymongo import PyMongo
@@ -119,3 +120,18 @@ def purge_expired():
     query = {"expires_at": {"$lte": datetime.datetime.now()}}
     results = urls.delete_many(query)
     return jsonify({"status": "success", "deleted": results.deleted_count})
+
+@app.route("/v1/auth", methods=["POST"])
+def auth():
+    schema = AuthInputSchema()
+    data = request.get_json()
+    errors = schema.validate(data)
+
+    if errors:
+        return Response("{'status': 'failure :sad_face:'}", status=400, mimetype='application/json')
+
+    password = data['password']
+    if password == os.getenv("APP_AUTH_PASSWORD"):
+        return Response("{'auth': 'success'}")
+
+    return Response("{'auth': 'failure'}", status=400, mimetype='application/json')
