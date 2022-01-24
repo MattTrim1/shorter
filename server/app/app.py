@@ -135,3 +135,10 @@ def auth():
         return Response("{'auth': 'success'}", mimetype='application/json')
 
     return Response("{'auth': 'failure'}", status=400, mimetype='application/json')
+
+@app.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Headers'] = '*'
+    return response
