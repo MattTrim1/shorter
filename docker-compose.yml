@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  client:
+    container_name: "client"
+    build: 
+      context: ./client
+      target: ${CLIENT_TARGET_ENV}
+    ports:
+      - "3000:3000"
+    links:
+      - "server:api"
+    networks:
+      - "internal"
+
+  server:
+    container_name: "server"
+    build: server
+    ports:
+      - "5000:5000"
+    networks:
+      - "internal"
+
+networks:
+  internal:

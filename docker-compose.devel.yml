@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  client:
+    volumes:
+      - ./client:/usr/src/app/shorter
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
