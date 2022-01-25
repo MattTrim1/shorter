@@ -33,15 +33,18 @@ function GenerateNewShortUrlScreen() {
   }
 
   const handleResponse = (response) => {
-    // check our response is valid
-    // if created, display the newly created URL
     resetFormInputField();
-    console.log(response);
     const data = response.data;
-    setSuccess(true);
-    setShowForm(false);
-    setShortcode(data.shortcode);
-    setExpiry(data.expires_at);
+    if (data.status === "success") {
+      setSuccess(true);
+      setShowForm(false);
+      setShortcode(data.shortcode);
+      setExpiry(data.expires_at);
+    }
+    else {
+      alert("Unable to shorten URL.");
+      resetFormInputField();
+    }
   }
 
   const resetFormInputField = () => {
