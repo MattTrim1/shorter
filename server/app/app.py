@@ -59,7 +59,9 @@ def get(shortcode):
     query = {"shortcode": shortcode}
     result_count = urls.count_documents(query)
     if result_count == 0:
-        return Response("{'status': 'SHORTCODE_NOT_FOUND'}", status=404, mimetype='application/json')
+        return make_response(jsonify({
+            "status": "SHORTCODE_NOT_FOUND"
+        }), 404)
 
     result = urls.find_one(query, {'_id': 0, 'full_url': 1})
 
@@ -68,7 +70,7 @@ def get(shortcode):
         "full_url": result['full_url']
     }
 
-    return jsonify(resp)
+    return make_response(jsonify(resp))
 
 
 @app.route("/v1/url", methods=["POST"])
@@ -78,7 +80,9 @@ def create_shortcode():
     errors = schema.validate(data)
 
     if errors:
-        return Response("{'status': 'failure :sad_face:'}", status=400, mimetype='application/json')
+        return make_response(jsonify({
+            "status": "failure :sad_face:"
+        }), 400)
 
     full_url = data['full_url']
     # TODO: If we receive a shortcode, ensure it only contains allowed characters
@@ -96,7 +100,7 @@ def create_shortcode():
             "shortcode": existing['shortcode']
         }
 
-        return jsonify(resp)
+        return make_response(jsonify(resp))
 
     model = UrlModel(full_url, shortcode, request.remote_addr)
 
@@ -112,14 +116,17 @@ def create_shortcode():
         "shortcode": model.shortcode
     }
 
-    return jsonify(created_response_json)
+    return make_response(jsonify(created_response_json))
 
 
 @app.route("/v1/url/purge-expired", methods=["POST"])
 def purge_expired():
     query = {"expires_at": {"$lte": datetime.datetime.now()}}
     results = urls.delete_many(query)
-    return jsonify({"status": "success", "deleted": results.deleted_count})
+    return make_response(jsonify({
+        "status": "success",
+        "deleted": results.deleted_count
+    }))
 
 @app.route("/v1/auth", methods=["POST"])
 def auth():
@@ -128,13 +135,19 @@ def auth():
     errors = schema.validate(data)
 
     if errors:
-        return Response("{'status': 'failure :sad_face:'}", status=400, mimetype='application/json')
+        return make_response(jsonify({
+            "status": "failure :sad_face:"
+        }), 400)
 
     password = data['password']
     if password == os.getenv("APP_AUTH_PASSWORD"):
-        return Response("{'auth': 'success'}", mimetype='application/json')
+        return make_response(jsonify({
+           "auth": "success"
+        }), 200)
 
-    return Response("{'auth': 'failure'}", status=400, mimetype='application/json')
+    return make_response(jsonify({
+       "auth": "failure"
+    }), 401)
 
 @app.after_request
 def after_request(response):
