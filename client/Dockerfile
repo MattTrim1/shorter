@@ -1,8 +1,9 @@
 FROM node AS base
 
-WORKDIR /usr/src/app/shorter
+WORKDIR /app/shorter
 COPY package*.json ./
 RUN npm install
+ENV PATH /app/shorter/node_modules/.bin:$PATH
 
 FROM base AS devel
 
