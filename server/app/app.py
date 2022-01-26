@@ -97,7 +97,8 @@ def create_shortcode():
         urls.update_one(query, {'$set': {'expires_at': existing['expires_at'] + datetime.timedelta(weeks=4)}})
         resp = {
             "status": "success",
-            "shortcode": existing['shortcode']
+            "shortcode": existing['shortcode'],
+            "expires_at": existing['expires_at']
         }
 
         return make_response(jsonify(resp))
@@ -113,7 +114,8 @@ def create_shortcode():
 
     created_response_json = {
         "status": "success",
-        "shortcode": model.shortcode
+        "shortcode": model.shortcode,
+        "expires_at": model.expires_at
     }
 
     return make_response(jsonify(created_response_json))

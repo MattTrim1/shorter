@@ -12,7 +12,6 @@ function PasswordScreen(props) {
     // Make API call to ensure our password is correct
     auth(password)
       .then((r) => {
-        console.log(r.data);
         (r['status'] === 200) ? props.setIsAuthed(true) : props.setIsAuthed(false); // TODO: Remove the 'then' call
       })
       .catch((e) => {

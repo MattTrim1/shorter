@@ -15,12 +15,12 @@ async function shortenUrl(longUrl, shortcode = null) {
   return await axios.post(`${process.env.REACT_APP_API_URL}/v1/url`, req);
 }
 
-function getFullUrl(shortcode) {
-  // TODO: Implement
+async function getFullUrl(shortcode) {
+  return await axios.get(`${process.env.REACT_APP_API_URL}/v1/url/${shortcode}`);
 }
 
 function isValidUrl(value) {
-  const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+  const expression = /http[s]?:\/\/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
   const regexp = new RegExp(expression);
   return regexp.test(value);
 }
