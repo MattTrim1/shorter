@@ -114,7 +114,8 @@ def create_shortcode():
 
     created_response_json = {
         "status": "success",
-        "shortcode": model.shortcode
+        "shortcode": model.shortcode,
+        "expires_at": model.expires_at
     }
 
     return make_response(jsonify(created_response_json))
