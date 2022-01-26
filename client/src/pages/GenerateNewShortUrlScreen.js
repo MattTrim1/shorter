@@ -51,13 +51,17 @@ function GenerateNewShortUrlScreen() {
     document.getElementById("formSubmitLongURL").value = "";
   }
 
+  const generateShortUrl = () => {
+    return `${window.location.href}${shortcode}`;
+  }
+
   return (
     <section className="text-center">
       <h3 className="mb-3">Welcome!</h3>
       {success ? (
         <>
           <h3>Success</h3>
-          <p>Your short URL is: {window.location.href}{shortcode}.</p>
+          <p>Your short URL is: <a href={generateShortUrl()}>{generateShortUrl()}</a>.</p>
           <p>It expires on {expiry}!</p>
         </>
       ) : <></>}
