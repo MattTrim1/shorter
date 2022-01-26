@@ -18,7 +18,7 @@ function GenerateNewShortUrlScreen() {
 
     // attempt to shorten the URL 
     if (!valid) {
-      alert("Invalid URL.");
+      alert('Invalid URL.');
       resetFormInputField();
       return;
     }
@@ -27,7 +27,7 @@ function GenerateNewShortUrlScreen() {
       .then(r => handleApiResponse(r))
       .catch(e => {
         console.log(e);
-        alert("Unable to shorten URL.");
+        alert('Unable to shorten URL.');
         resetFormInputField();
       });
   }
@@ -35,14 +35,14 @@ function GenerateNewShortUrlScreen() {
   const handleApiResponse = (response) => {
     resetFormInputField();
     const data = response.data;
-    if (data.status === "success") {
+    if (data.status === 'success') {
       setSuccess(true);
       setShowForm(false);
       setShortcode(data.shortcode);
       setExpiry(data.expires_at);
     }
     else {
-      alert("Unable to shorten URL.");
+      alert('Unable to shorten URL.');
       resetFormInputField();
     }
   }
@@ -58,7 +58,7 @@ function GenerateNewShortUrlScreen() {
   }
 
   const resetFormInputField = () => {
-    document.getElementById("formSubmitLongURL").value = "";
+    document.getElementById('formSubmitLongURL').value = "";
   }
 
   const generateShortUrl = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import App from './components/App';
-import { getFullUrl } from "./services/UrlService";
+import { getFullUrl } from './services/UrlService';
 
 const path = document.location.pathname.toString();
 
@@ -13,7 +13,7 @@ if (path !== '/') {
     window.location.replace(r.data.full_url);
   })
   .catch(e => {
-    alert("Could not resolve full URL from shortcode.")
+    alert('Could not resolve full URL from shortcode.')
     console.log(e);
   });
 }
