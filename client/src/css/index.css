@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@400;700&family=Oswald&display=swap');
 
-body {
-    /* background:linear-gradient(90deg, rgba(239, 118, 122, 1) 0%, rgba(73, 190, 170, 1) 30%, rgba(55, 113, 142, 1) 100%); */
-    background: white !important;
-}
-
 h1 {
     text-align: center;
     font-family: 'Oswald', sans-serif;

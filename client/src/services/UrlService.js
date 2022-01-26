@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+const axios = require('axios');
 
 async function auth(password) {
   return await axios.post(`${process.env.REACT_APP_API_URL}/v1/auth`, {
