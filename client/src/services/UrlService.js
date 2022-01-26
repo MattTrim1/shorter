@@ -15,8 +15,8 @@ async function shortenUrl(longUrl, shortcode = null) {
   return await axios.post(`${process.env.REACT_APP_API_URL}/v1/url`, req);
 }
 
-function getFullUrl(shortcode) {
-  // TODO: Implement
+async function getFullUrl(shortcode) {
+  return await axios.get(`${process.env.REACT_APP_API_URL}/v1/url/${shortcode}`);
 }
 
 function isValidUrl(value) {
