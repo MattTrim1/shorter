@@ -24,7 +24,7 @@ function GenerateNewShortUrlScreen() {
     }
 
     shortenUrl(url)
-      .then(r => handleResponse(r))
+      .then(r => handleApiResponse(r))
       .catch(e => {
         console.log(e);
         alert("Unable to shorten URL.");
@@ -32,7 +32,7 @@ function GenerateNewShortUrlScreen() {
       });
   }
 
-  const handleResponse = (response) => {
+  const handleApiResponse = (response) => {
     resetFormInputField();
     const data = response.data;
     if (data.status === "success") {
@@ -45,6 +45,16 @@ function GenerateNewShortUrlScreen() {
       alert("Unable to shorten URL.");
       resetFormInputField();
     }
+  }
+
+  const resetState = (e) => {
+    e.preventDefault();
+
+    setUrl("");
+    setSuccess(false);
+    setShowForm(true);
+    setShortcode("");
+    setExpiry("");
   }
 
   const resetFormInputField = () => {
@@ -63,6 +73,7 @@ function GenerateNewShortUrlScreen() {
           <h3>Success</h3>
           <p>Your short URL is: <a href={generateShortUrl()}>{generateShortUrl()}</a>.</p>
           <p>It expires on {expiry}!</p>
+          <Button variant="info" type="submit" onClick={resetState}>Create New</Button>
         </>
       ) : <></>}
       {showForm && (
